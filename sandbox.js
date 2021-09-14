@@ -17,7 +17,13 @@ const getTodos = (resourse) => {
 }
 
 getTodos('./todos/luigi.json').then(data=> {
-    console.log("udało się pobrac dane:", data)
+    console.log("udało się pobrac dane 1:", data)
+    return getTodos('./todos/mario.json')
+}).then(data=> {
+    console.log("udało się pobrać dane 2:", data)
+    return getTodos('./todos/shaun.json')
+}).then(data=> {
+    console.log("udało się pobrać dane 3:", data)
 }).catch(err=> {
     console.log("Nie udało się pobrać danych",err)
 })
