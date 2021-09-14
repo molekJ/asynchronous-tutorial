@@ -1,15 +1,19 @@
 const getTodos = (callback) => {
     const request = new XMLHttpRequest();
-
+    // sledzimy postep
     request.addEventListener('readystatechange', ()=> {
         if(request.readyState === 4 && request.status === 200){
-            callback(undefined, request.responseText);
+            const data = JSON.parse(request.responseText)
+            callback(undefined, data);
+            data.forEach(element => {
+                console.log(element)
+            });
         } else if(request.readyState === 4){ // stan 4 odpowiada za zakonczoną operacje
             callback('could not fetch data', undefined);
         }
     })
-    request.open('GET', "https://jsonplaceholder.typicode.com/todos/");
-    request.send();
+    request.open('GET', 'todos.json'); // okreslamy co i gdzie chcemy zrobic
+    request.send(); // wysylamy żądanie
 }
 
 console.log(1);
