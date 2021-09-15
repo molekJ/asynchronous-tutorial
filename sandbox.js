@@ -1,29 +1,20 @@
-const getTodos = (resourse) => {
+// fetch
 
-    return new Promise ((resolve, reject) => {
-        const request = new XMLHttpRequest();
-
-        request.addEventListener('readystatechange', ()=> {
-            if(request.readyState === 4 && request.status === 200){
-                const data = JSON.parse(request.responseText)
-                resolve(data);
-            } else if(request.readyState === 4){ 
-                reject('Error gettin resource')
-            }
-        })
-        request.open('GET', resourse); 
-        request.send();
-    })
-}
-
-getTodos('./todos/luigi.json').then(data=> {
-    console.log("udało się pobrac dane 1:", data)
-    return getTodos('./todos/mario.json')
-}).then(data=> {
-    console.log("udało się pobrać dane 2:", data)
-    return getTodos('./todos/shaun.json')
-}).then(data=> {
-    console.log("udało się pobrać dane 3:", data)
-}).catch(err=> {
-    console.log("Nie udało się pobrać danych",err)
-})
+fetch("./todos/luigi.json") // przekazujemy argument będący zasobem
+  .then((response) => {
+    // obsługa po sukcesie // resolve
+    console.log("suksec:", response);
+    return response.json(); //ta metoda daje nam dane
+  })
+  .then((data) => {
+    console.log(data);
+  })
+  .catch((err) => {
+    // obsługa po niepowodzeniu, uruchamia funkcje zwrotną // reject
+    console.log("err`:", err);
+  });
+// obietnica jest odrzucana tylko wtedy, gdy pojawia się jakiś błąd sieci
+// błędny adres URL lub punkt końcowy lub zasób nie wywali błędu
+// 1. pobieramy dane => FETCH
+// 2. bierzemy odpowiedź i zwracamy odpowiedź.json, który zwraca obietnicę
+// 3. uruchamiamy funkcję w której faktycznie mamy dostęp do danych
